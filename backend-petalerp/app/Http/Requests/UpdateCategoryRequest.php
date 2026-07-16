@@ -3,15 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreCategoryRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true; 
+        return true;
     }
 
     /**
@@ -21,10 +22,16 @@ class StoreCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-       return [
-            'name' => 'required|string|max:100|unique:categories,name',
+        return [
+            'name' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('categories', 'name')
+                    ->ignore($this->route('category')->id),
+            ],
             'description' => 'nullable|string',
-            'is_active' => 'boolean'
+            'is_active' => 'boolean',
         ];
-    }   
+    }
 }
