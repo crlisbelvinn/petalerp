@@ -9,11 +9,12 @@ class Product extends Model
 {
     protected $fillable = [
         'category_id',
-        'product_name',
+        'name',
         'price',
         'stock',
         'description',
-        'picture',
+        'image',
+        'is_active',
     ];
 
     public function category(): BelongsTo
