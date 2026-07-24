@@ -13,13 +13,26 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+
+            $table->string('order_number')->unique();
+
+            $table->string('customer_name');
+
+            $table->string('customer_phone');
+
+            $table->decimal('total_price', 10, 2)->default(0);
+
+            $table->enum('status', [
+                'pending',
+                'paid',
+                'completed',
+                'cancelled'
+            ])->default('pending');
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('orders');
